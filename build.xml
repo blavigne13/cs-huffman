@@ -1,0 +1,54 @@
+<project>
+    <target name="clean">
+        <delete dir="bin"/>
+        <delete dir="doc"/>
+        <delete file="wap_compressed.huf"/>
+        <delete file="wap_extracted.txt"/>
+        <delete file="test_compressed.huf"/>
+        <delete file="test_extracted.txt"/>
+    </target>
+
+<!-- This assumes all of your Java files are in a src folder -->
+<!-- Will compile your Java files and place the class files in a bin folder -->
+    <target name="compile">
+        <mkdir dir="bin"/>
+        <javac includeantruntime="false" destdir="bin" srcdir="src"/>
+    </target>
+
+<!-- This calls javadoc and produces documentation -->
+    <target name="docs">
+        <mkdir dir="doc"/>
+        <javadoc destdir="doc">
+            <fileset dir="src" includes="*.java"/>
+        </javadoc>
+    </target>
+
+<!-- This assumes your main method is inside Tester.java -->
+    <target name="run">
+        <java classpath="bin" classname="Ensmallify">
+			<arg value="wap.txt"/>
+			<arg value="wap_compressed.huf"/>
+		</java>
+        <java classpath="bin" classname="Enbigify">
+			<arg value="wap_compressed.huf"/>
+			<arg value="wap_extracted.txt"/>
+		</java>
+
+		<java classpath="bin" classname="Ensmallify">
+			<arg value="test.txt"/>
+			<arg value="test_compressed.huf"/>
+		</java>
+        <java classpath="bin" classname="Enbigify">
+			<arg value="test_compressed.huf"/>
+			<arg value="test_extracted.txt"/>
+		</java>
+    </target>
+
+    <target name="all">
+        <antcall target="clean"/>
+        <antcall target="compile"/>
+        <antcall target="docs"/>
+        <antcall target="run"/>
+    </target>
+
+</project>
