@@ -1,4 +1,4 @@
-# cs-huffman
+# Huffman encoder and decoder
 
 Course: Data Structures
 
